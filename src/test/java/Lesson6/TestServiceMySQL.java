@@ -114,5 +114,9 @@ public class TestServiceMySQL {
         Assert.assertEquals("7",notesTemp.get(0).getId());
         Assert.assertEquals("6",notesTemp.get(1).getId());
 
+        noteServiceMySQL.delete("6");
+        notesTemp = noteServiceMySQL.getForUser(userList.get(1).getId());
+        Assert.assertEquals(1,notesTemp.size());
+        Assert.assertEquals("7",notesTemp.get(0).getId());
     }
 }

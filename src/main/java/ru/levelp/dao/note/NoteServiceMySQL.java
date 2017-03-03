@@ -38,7 +38,10 @@ public class NoteServiceMySQL extends BaseServiceMySQL<Note,String> implements N
     }
 
     @Override
-    public void delete(String note) {
-
+    public void delete(String idNote) {
+        Note note = (Note) getSession().createCriteria(Note.class)
+                .add(Restrictions.eq("id", idNote))
+                .uniqueResult();
+        getSession().delete(note);
     }
 }

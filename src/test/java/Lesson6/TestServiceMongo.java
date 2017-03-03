@@ -34,6 +34,9 @@ public class TestServiceMongo {
     public void createMongoBase(){
 
         userServiceMongo = new UserServiceMongo();
+        noteServiceMongo = new NoteServiceMongo();
+        userServiceMongo.drop();
+        noteServiceMongo.drop();
         userList = new ArrayList<User>();
         names = new ArrayList<String>();
 
@@ -53,7 +56,7 @@ public class TestServiceMongo {
 
 
         noteList =  new ArrayList<Note>();
-        noteServiceMongo = new NoteServiceMongo();
+
         //В цикле создаем 6 заметок. Добавляем их в коллекцию и сохраняем в БД в коллекцию "notes"
         for(int i=0;i<6;i++){
             int j=i+6;
@@ -72,8 +75,8 @@ public class TestServiceMongo {
         //        AccessRight(int mode, String userId, String noteId)
         AccessRight accessRight = new AccessRight(0,1+"",6+"");
         accessRight.setId(0+"");
-        AccessRightServiceMongo rightServiceMySQL = new AccessRightServiceMongo();
-        rightServiceMySQL.add(accessRight);
+        AccessRightServiceMongo rightServiceMongo = new AccessRightServiceMongo();
+        rightServiceMongo.add(accessRight);
 
 
     }
@@ -91,6 +94,8 @@ public class TestServiceMongo {
         //Получаем список всех пользователей и сохраняем его в userTemp
         List<User> userTemp = userServiceMongo.getAll();
         //Перебираем полученную коллекцию и проверяем поля id, email, name
+        Assert.assertEquals(userList.size(),userTemp.size());
+
         for(int i=0;i<userList.size();i++){
             Assert.assertEquals(userList.get(i).getId(),userTemp.get(i).getId());
             Assert.assertEquals(userList.get(i).getEmail(),userTemp.get(i).getEmail());
